@@ -1,28 +1,11 @@
----
-title: "Intro to ggplot2"
-author: "Matt O'Donnell"
-date: "February 5, 2016"
-
-knit: (function(inputFile, encoding) { 
-      out_dir <- '../html';
-      parts <- unlist(strsplit(inputFile,'/'));
-      inputFileName <- parts[length(parts)];
-      rmarkdown::render(inputFile,
-                        encoding=encoding, 
-                        output_file=file.path(dirname(inputFile), out_dir, 
-                        gsub(".[Rr]md",".html",inputFileName))) })
-
-output: 
-  html_document:
-    toc: true
-    theme: united
-    keep_md: true
-    
----
+# Intro to ggplot2
+Matt O'Donnell  
+February 5, 2016  
 
 ## ggplot2 - The Grammar of Graphics
 
-```{r}
+
+```r
 library(ggplot2)
 ```
 
@@ -32,8 +15,8 @@ Having your data in a data frame is the most natural and straight forward repres
 
 #### This is a __wide__ data frame
 
-```{r}
 
+```r
 df_wide <- data.frame(
   id = paste('p', 1:5, sep=''),
   var1 = sample(1:100, 5),
@@ -45,13 +28,23 @@ df_wide <- data.frame(
 df_wide
 ```
 
+```
+##   id var1 var2 var3 var4
+## 1 p1   44  568 1563    A
+## 2 p2   97  917 2464    A
+## 3 p3   52  934 2370    B
+## 4 p4   58  925 2164    C
+## 5 p5   26  694 8159    C
+```
+
 ## Simple Example: Scatter plot
 
-```{r}
 
+```r
 ggplot(df_wide, aes(x=var1, y=var2)) + geom_point()
-
 ```
+
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-3-1.png)\
 
 
 ## The components of a ggplot
@@ -62,10 +55,9 @@ ggplot(df_wide, aes(x=var1, y=var2)) + geom_point()
 
 You can build up the layers of a plot by assigning the result of the ``ggplot`` function to a variable and then adding layers. The following sets up the plot by specifying the data frame and the aesthetics, i.e. which variable should go to which axis in the plot. But it doesn't plot anything.
 
-```{r}
 
+```r
 p <- ggplot(df_wide, aes(x=var1, y=var2))
-
 ```
 
 ### A __geom__ function
@@ -83,76 +75,97 @@ Plots require a __geom__ function to display the data. Examples include:
 
 #### A scatter plot of var1 (x) against var2 (y)
 
-```{r}
 
+```r
 p + geom_point()
-
 ```
+
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-5-1.png)\
 
 
 #### A line plot connecting x,y points
 
-```{r}
 
+```r
 p + geom_line()
-
 ```
+
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-6-1.png)\
 
 
 #### A path line plot connecting x,y points in order
 
 
 
-```{r}
 
+```r
 df_wide
-
-p + geom_path()
+```
 
 ```
+##   id var1 var2 var3 var4
+## 1 p1   44  568 1563    A
+## 2 p2   97  917 2464    A
+## 3 p3   52  934 2370    B
+## 4 p4   58  925 2164    C
+## 5 p5   26  694 8159    C
+```
+
+```r
+p + geom_path()
+```
+
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-7-1.png)\
 
 If we reorder the data frame the plot will look different.
 
-```{r}
 
+```r
 df2_wide2 <- df_wide[order(df_wide$var1,df_wide$var2),]
 p <- ggplot(df2_wide2, aes(x=var1, y=var2))
 p + geom_path()
 ```
 
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-8-1.png)\
+
 
 #### A bar graph counting the number of items in each group (var4)
 
-```{r}
 
+```r
 p <- ggplot(df_wide, aes(var4)) 
 p + geom_bar()
-
 ```
+
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-9-1.png)\
 
 
 #### A boxplot 
 
-```{r}
 
+```r
 p <- ggplot(df_wide, aes(x=var4, y=var1)) 
 p + geom_boxplot()
 ```
 
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-10-1.png)\
+
 You can add aesthetic mappings to the __geom__ function as well to control specific features of the the plot, e.g. the fill color of each boxplot or bar
 
-```{r}
 
+```r
 p + geom_boxplot(aes(fill=var4))
-
 ```
 
-```{r}
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-11-1.png)\
 
+
+```r
 p <- ggplot(df_wide, aes(var4))
 p + geom_bar(aes(fill=var4))
-
 ```
+
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-12-1.png)\
 
 
 ### Graph labels
@@ -162,26 +175,28 @@ p + geom_bar(aes(fill=var4))
 * ``ggtitle()`` - specify title for graph and legends
 * ``labs()`` - set all of the above with parameters in one function
 
-```{r}
 
+```r
 p <- ggplot(mtcars, aes(x=wt, y=mpg))
 p + geom_point() +
   xlab('Miles per gallon') +
   ylab('Weight') +
   ggtitle('Car weight to fuel efficiency')
-
 ```
+
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-13-1.png)\
 
 is equivalent to
 
-```{r}
 
+```r
 p + geom_point() + 
   labs(x='Miles per gallon', 
        y='Weight',
        title='Car weight to fuel efficiency')
-
 ```
+
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-14-1.png)\
 
 ### Adding additional aesthetics 
 
@@ -193,27 +208,28 @@ If you have more than two variables you want to represent you can make use of ot
 
 These can be added as aesthetics to the specific __geom__ function, e.g. to ``geom_point`` for a scatter plot, by including a ``aes`` function
 
-```{r}
 
-
+```r
 # 1. set up the main mapping from data to x and y axes
 p <- ggplot(mtcars, aes(x=mpg, y=wt))
 
 # 2. set up a mapping with the color of points and the number of cylinders (needs to be treated as a factor not an numeric using factor())
 p + geom_point(aes(colour=factor(cyl)))
-
 ```
 
-```{r}
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-15-1.png)\
 
+
+```r
 # 3. add a fourth dimension for the displacement variable using point size
 p + geom_point(aes(colour=factor(cyl), size=disp))
-
 ```
 
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-16-1.png)\
 
-```{r}
 
+
+```r
 # 4. add in nicer labels for title, axes and legends
 
 p + geom_point(aes(colour=factor(cyl), size=disp)) +
@@ -222,8 +238,9 @@ p + geom_point(aes(colour=factor(cyl), size=disp)) +
   ylab('Miles per gallon') +
   ggtitle(aes(colour='Cylinders',
               size='Displacement'))
-
 ```
+
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-17-1.png)\
 
 
 ### Adding lines to a plot
@@ -236,8 +253,21 @@ p + geom_point(aes(colour=factor(cyl), size=disp)) +
 
 
 
-```{r}
 
+```r
 ggplot(mtcars, aes(cyl,wt)) + stat_summary(fun.y=mean, geom='bar', aes(fill=factor(cyl))) + stat_summary(fun.data=mean_cl_boot, geom='errorbar', width=0.2)
+```
 
 ```
+## Warning: replacing previous import by 'ggplot2::unit' when loading 'Hmisc'
+```
+
+```
+## Warning: replacing previous import by 'ggplot2::arrow' when loading 'Hmisc'
+```
+
+```
+## Warning: replacing previous import by 'scales::alpha' when loading 'Hmisc'
+```
+
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-18-1.png)\
