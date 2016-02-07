@@ -30,11 +30,11 @@ df_wide
 
 ```
 ##   id var1 var2 var3 var4
-## 1 p1   44  568 1563    A
-## 2 p2   97  917 2464    A
-## 3 p3   52  934 2370    B
-## 4 p4   58  925 2164    C
-## 5 p5   26  694 8159    C
+## 1 p1   21  649 2224    A
+## 2 p2   51  703 9311    A
+## 3 p3   84  701 3680    B
+## 4 p4   25  537 3222    C
+## 5 p5   49  990 7438    C
 ```
 
 ## Simple Example: Scatter plot
@@ -44,7 +44,7 @@ df_wide
 ggplot(df_wide, aes(x=var1, y=var2)) + geom_point()
 ```
 
-![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-3-1.png)\
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-3-1.png)
 
 
 ## The components of a ggplot
@@ -80,7 +80,7 @@ Plots require a __geom__ function to display the data. Examples include:
 p + geom_point()
 ```
 
-![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-5-1.png)\
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-5-1.png)
 
 
 #### A line plot connecting x,y points
@@ -90,7 +90,7 @@ p + geom_point()
 p + geom_line()
 ```
 
-![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-6-1.png)\
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-6-1.png)
 
 
 #### A path line plot connecting x,y points in order
@@ -104,18 +104,18 @@ df_wide
 
 ```
 ##   id var1 var2 var3 var4
-## 1 p1   44  568 1563    A
-## 2 p2   97  917 2464    A
-## 3 p3   52  934 2370    B
-## 4 p4   58  925 2164    C
-## 5 p5   26  694 8159    C
+## 1 p1   21  649 2224    A
+## 2 p2   51  703 9311    A
+## 3 p3   84  701 3680    B
+## 4 p4   25  537 3222    C
+## 5 p5   49  990 7438    C
 ```
 
 ```r
 p + geom_path()
 ```
 
-![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-7-1.png)\
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-7-1.png)
 
 If we reorder the data frame the plot will look different.
 
@@ -126,7 +126,7 @@ p <- ggplot(df2_wide2, aes(x=var1, y=var2))
 p + geom_path()
 ```
 
-![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-8-1.png)\
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-8-1.png)
 
 
 #### A bar graph counting the number of items in each group (var4)
@@ -137,7 +137,7 @@ p <- ggplot(df_wide, aes(var4))
 p + geom_bar()
 ```
 
-![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-9-1.png)\
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-9-1.png)
 
 
 #### A boxplot 
@@ -148,7 +148,7 @@ p <- ggplot(df_wide, aes(x=var4, y=var1))
 p + geom_boxplot()
 ```
 
-![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-10-1.png)\
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-10-1.png)
 
 You can add aesthetic mappings to the __geom__ function as well to control specific features of the the plot, e.g. the fill color of each boxplot or bar
 
@@ -157,7 +157,7 @@ You can add aesthetic mappings to the __geom__ function as well to control speci
 p + geom_boxplot(aes(fill=var4))
 ```
 
-![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-11-1.png)\
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-11-1.png)
 
 
 ```r
@@ -165,7 +165,7 @@ p <- ggplot(df_wide, aes(var4))
 p + geom_bar(aes(fill=var4))
 ```
 
-![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-12-1.png)\
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-12-1.png)
 
 
 ### Graph labels
@@ -184,7 +184,7 @@ p + geom_point() +
   ggtitle('Car weight to fuel efficiency')
 ```
 
-![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-13-1.png)\
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-13-1.png)
 
 is equivalent to
 
@@ -196,7 +196,7 @@ p + geom_point() +
        title='Car weight to fuel efficiency')
 ```
 
-![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-14-1.png)\
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-14-1.png)
 
 ### Adding additional aesthetics 
 
@@ -217,7 +217,7 @@ p <- ggplot(mtcars, aes(x=mpg, y=wt))
 p + geom_point(aes(colour=factor(cyl)))
 ```
 
-![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-15-1.png)\
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-15-1.png)
 
 
 ```r
@@ -225,7 +225,7 @@ p + geom_point(aes(colour=factor(cyl)))
 p + geom_point(aes(colour=factor(cyl), size=disp))
 ```
 
-![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-16-1.png)\
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-16-1.png)
 
 
 
@@ -240,7 +240,7 @@ p + geom_point(aes(colour=factor(cyl), size=disp)) +
               size='Displacement'))
 ```
 
-![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-17-1.png)\
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-17-1.png)
 
 
 ### Adding lines to a plot
@@ -270,4 +270,4 @@ ggplot(mtcars, aes(cyl,wt)) + stat_summary(fun.y=mean, geom='bar', aes(fill=fact
 ## Warning: replacing previous import by 'scales::alpha' when loading 'Hmisc'
 ```
 
-![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-18-1.png)\
+![](/Users/Matt/files/classes/COMM883_2016A/Rmd/../html/ggplot_intro_files/figure-html/unnamed-chunk-18-1.png)
