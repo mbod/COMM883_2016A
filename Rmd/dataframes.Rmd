@@ -2,19 +2,13 @@
 title: "Working with data frames in R (1)"
 author: "Matt O'Donnell"
 date: "Jan 22, 2016"
-knit: (function(inputFile, encoding) { 
-      out_dir <- '../html';
-      parts <- unlist(strsplit(inputFile,'/'));
-      inputFileName <- parts[length(parts)];
-      rmarkdown::render(inputFile,
-                        encoding=encoding, 
-                        output_file=file.path(dirname(inputFile), out_dir, 
-                        gsub(".Rmd",".html",inputFileName))) })
 
 output:
   html_document:
     theme: united
     toc: yes
+    toc_depth: 4
+    keep_md: true
 ---
 
 
