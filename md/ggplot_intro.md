@@ -30,11 +30,11 @@ df_wide
 
 ```
 ##   id var1 var2 var3 var4
-## 1 p1   13  554 3168    A
-## 2 p2   10  596 7372    A
-## 3 p3   31  513 3487    B
-## 4 p4   73  818 6156    C
-## 5 p5   85  502 8190    C
+## 1 p1   34  934 7079    A
+## 2 p2   39  543 2556    A
+## 3 p3   22  979 5520    B
+## 4 p4   18  645 1968    C
+## 5 p5   44  790 1440    C
 ```
 
 ## Simple Example: Scatter plot
@@ -104,11 +104,11 @@ df_wide
 
 ```
 ##   id var1 var2 var3 var4
-## 1 p1   13  554 3168    A
-## 2 p2   10  596 7372    A
-## 3 p3   31  513 3487    B
-## 4 p4   73  818 6156    C
-## 5 p5   85  502 8190    C
+## 1 p1   34  934 7079    A
+## 2 p2   39  543 2556    A
+## 3 p3   22  979 5520    B
+## 4 p4   18  645 1968    C
+## 5 p5   44  790 1440    C
 ```
 
 ```r
@@ -245,29 +245,161 @@ p + geom_point(aes(colour=factor(cyl), size=disp)) +
 
 ### Adding lines to a plot
 
-* ``geom_hline``
-* ``geom_vline``
-* ``geom_abline``
+* ``geom_hline`` - draw a horizontal line on the plot (y axis)
+* ``geom_vline`` - draw a vertical line on the plot (x axis)
+* ``geom_abline`` - draw 'ab' line with specified slope and y-intercept 
 
+#### Horizontal and vertical lines
 
-
-
+Here we add lines to each axis for the mean of the values along that axis (x-axis is __mpg__ and y-axis is __wt__).
 
 
 ```r
-ggplot(mtcars, aes(cyl,wt)) + stat_summary(fun.y=mean, geom='bar', aes(fill=factor(cyl))) + stat_summary(fun.data=mean_cl_boot, geom='errorbar', width=0.2)
-```
+p <- ggplot(mtcars, aes(x=mpg, y=wt))
 
-```
-## Warning: replacing previous import by 'ggplot2::unit' when loading 'Hmisc'
-```
-
-```
-## Warning: replacing previous import by 'ggplot2::arrow' when loading 'Hmisc'
-```
-
-```
-## Warning: replacing previous import by 'scales::alpha' when loading 'Hmisc'
+p + geom_point() + 
+  # add a vertical line on the x axis for the mean miles per gallon
+  geom_vline(aes(xintercept=mean(mpg)), linetype="dashed") +
+  # add a horizontal line on the y axis for the mean weight
+  geom_hline(aes(yintercept=mean(wt)), linetype="dotted")
 ```
 
 ![](ggplot_intro_files/figure-html/unnamed-chunk-18-1.png)
+
+
+The ``geom_hline`` and ``geom_vline`` functions can also plot multiple lines, e.g. for the mean of each level of a grouping variable.
+
+
+```r
+# create a data frame of the mean weight and mpg by number of cylinders
+# using the aggregate() function
+mean_vals <- aggregate(cbind(wt,mpg) ~ cyl, mtcars, mean)
+mean_vals
+```
+
+```
+##   cyl       wt      mpg
+## 1   4 2.285727 26.66364
+## 2   6 3.117143 19.74286
+## 3   8 3.999214 15.10000
+```
+
+```r
+# draw lines at means
+ggplot(mtcars, aes(x=mpg, y=wt, colour=factor(cyl))) +
+    geom_point() +
+    geom_hline(aes(yintercept=wt, colour=factor(cyl)), 
+               mean_vals, linetype='dashed') +
+    geom_vline(aes(xintercept=mpg, colour=factor(cyl)), 
+               mean_vals, linetype='dotted')
+```
+
+![](ggplot_intro_files/figure-html/unnamed-chunk-19-1.png)
+
+
+#### Regression lines
+
+1. You can specify the _intercept_ and and _slope_ directly using the ``geom_abline`` function:
+
+
+```r
+# fit regression line
+md <- lm(wt ~ mpg, mtcars)
+
+# get intercept and slope
+coef(md)[1]   # intercept
+```
+
+```
+## (Intercept) 
+##    6.047255
+```
+
+```r
+coef(md)[2]   # slope
+```
+
+```
+##       mpg 
+## -0.140862
+```
+
+```r
+p + geom_point() +
+    geom_abline(intercept=coef(md)[1],
+                slope=coef(md)[2])
+```
+
+![](ggplot_intro_files/figure-html/unnamed-chunk-20-1.png)
+
+2. The ``geom_smooth`` function fits a model to the data as part of the plotting process:
+
+
+```r
+p <- ggplot(mtcars, aes(x=mpg, y=wt)) 
+
+p + geom_point() +
+    geom_smooth(method='lm')    # lm for linear model
+```
+
+![](ggplot_intro_files/figure-html/unnamed-chunk-21-1.png)
+
+Specify the kind of model to be fitted, options include:
+
+* lm
+* glm
+* gam
+* loess
+* rlm
+
+see ``?geom_smooth`` help for more details
+
+And can choose to show confidence intervals or not with the ``se`` parameter.
+
+
+```r
+p <- ggplot(mtcars, aes(x=mpg, y=wt)) 
+
+p + geom_point() +
+    geom_smooth(method='lm', se=FALSE)    # lm for linear model
+```
+
+![](ggplot_intro_files/figure-html/unnamed-chunk-22-1.png)
+
+``geom_smooth`` will fit multiple lines for each grouping factor specified in the main aesthetics.
+
+
+```r
+p <- ggplot(mtcars, aes(x=mpg, y=wt, colour=factor(cyl))) 
+
+p + geom_point() +
+    geom_smooth(method='lm', se=FALSE)    # lm for linear model
+```
+
+![](ggplot_intro_files/figure-html/unnamed-chunk-23-1.png)
+
+
+#### Putting it all together in a markedly UN-TUFE looking chart!
+
+
+```r
+p <- ggplot(mtcars, aes(x=mpg, y=wt, colour=factor(cyl))) 
+
+p + geom_point(aes(size=disp)) +
+    geom_smooth(method='lm') +   
+    geom_hline(aes(yintercept=wt, colour=factor(cyl)), 
+               mean_vals, linetype='dashed') +
+    geom_vline(aes(xintercept=mpg, colour=factor(cyl)), 
+               mean_vals, linetype='dotted') +
+  
+    ggtitle('Car relationship between weight and fuel efficency') +
+    xlab('Car weight') +
+    ylab('Miles per gallon') +
+    ggtitle(aes(colour='Cylinders',
+                size='Displacement')) +
+
+    theme_bw()
+```
+
+![](ggplot_intro_files/figure-html/unnamed-chunk-24-1.png)
+
