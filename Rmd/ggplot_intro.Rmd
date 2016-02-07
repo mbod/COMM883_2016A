@@ -3,14 +3,6 @@ title: "Intro to ggplot2"
 author: "Matt O'Donnell"
 date: "February 5, 2016"
 
-knit: (function(inputFile, encoding) { 
-      out_dir <- '../html';
-      parts <- unlist(strsplit(inputFile,'/'));
-      inputFileName <- parts[length(parts)];
-      rmarkdown::render(inputFile,
-                        encoding=encoding, 
-                        output_file=file.path(dirname(inputFile), out_dir, 
-                        gsub(".[Rr]md",".html",inputFileName))) })
 
 output: 
   html_document:
