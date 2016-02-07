@@ -3,12 +3,14 @@ title: "Intro to ggplot2"
 author: "Matt O'Donnell"
 date: "February 5, 2016"
 
-
 output: 
   html_document:
     toc: true
+    toc_depth: 4
+    number_sections: false
     theme: united
     keep_md: true
+    self_contained: false
     
 ---
 
