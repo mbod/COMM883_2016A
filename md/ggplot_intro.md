@@ -30,11 +30,11 @@ df_wide
 
 ```
 ##   id var1 var2 var3 var4
-## 1 p1   34  934 7079    A
-## 2 p2   39  543 2556    A
-## 3 p3   22  979 5520    B
-## 4 p4   18  645 1968    C
-## 5 p5   44  790 1440    C
+## 1 p1   79  989 9033    A
+## 2 p2   39  628 9699    A
+## 3 p3   22  577 7376    B
+## 4 p4   26  572 9455    C
+## 5 p5   69  860 9149    C
 ```
 
 ## Simple Example: Scatter plot
@@ -104,11 +104,11 @@ df_wide
 
 ```
 ##   id var1 var2 var3 var4
-## 1 p1   34  934 7079    A
-## 2 p2   39  543 2556    A
-## 3 p3   22  979 5520    B
-## 4 p4   18  645 1968    C
-## 5 p5   44  790 1440    C
+## 1 p1   79  989 9033    A
+## 2 p2   39  628 9699    A
+## 3 p3   22  577 7376    B
+## 4 p4   26  572 9455    C
+## 5 p5   69  860 9149    C
 ```
 
 ```r
@@ -379,7 +379,7 @@ p + geom_point() +
 ![](ggplot_intro_files/figure-html/unnamed-chunk-23-1.png)
 
 
-#### Putting it all together in a markedly UN-TUFE looking chart!
+#### Putting it all together in a markedly UN-TUFTE looking chart!
 
 
 ```r

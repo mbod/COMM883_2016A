@@ -324,7 +324,7 @@ p + geom_point() +
 ```
 
 
-#### Putting it all together in a markedly UN-TUFE looking chart!
+#### Putting it all together in a markedly UN-TUFTE looking chart!
 
 ```{r}
 
